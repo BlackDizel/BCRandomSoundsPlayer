@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BlackUfaAudio</string>
+    <!--todo set text -->
+    <string name="about">text Lorum ipsum siteurl\ncreated by Byters, 2016</string>
+    <string name="feedback">send feedback</string>
+    <string name="visit_website">visit website</string>
+    <string name="settings_display_mode">Display settings icon and featured list on startup</string>
+    <string name="settings_sounds_item_title_error">no data</string>
 </resources>
