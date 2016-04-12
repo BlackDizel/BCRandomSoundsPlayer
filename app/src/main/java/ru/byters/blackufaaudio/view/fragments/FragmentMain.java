@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.byters.blackufaaudio.R;
+import ru.byters.blackufaaudio.controllers.ControllerSongs;
 
-public class FragmentMain extends FragmentBase {
+public class FragmentMain extends FragmentBase
+        implements View.OnLongClickListener, View.OnClickListener {
+
+    private View ivSettings;
+
     public static FragmentMain getInstance() {
         return new FragmentMain();
     }
@@ -16,6 +21,33 @@ public class FragmentMain extends FragmentBase {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View v = inflater.inflate(R.layout.fragment_main, container, false);
+        ivSettings = v.findViewById(R.id.ivSettings);
+
+        v.setOnLongClickListener(this);
+        v.findViewById(R.id.ivSettings).setOnClickListener(this);
+        v.findViewById(R.id.ivPlay).setOnClickListener(this);
+        return v;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (ivSettings.getVisibility() == View.GONE)
+            ivSettings.setVisibility(View.VISIBLE);
+        else ivSettings.setVisibility(View.GONE);
+
+        return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivPlay:
+                ControllerSongs.getInstance().playRandom();
+                break;
+            case R.id.ivSettings:
+                //todo implement
+                break;
+        }
     }
 }
