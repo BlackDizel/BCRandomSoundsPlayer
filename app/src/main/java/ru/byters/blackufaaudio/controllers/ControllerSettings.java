@@ -2,7 +2,7 @@ package ru.byters.blackufaaudio.controllers;
 
 import android.content.Context;
 
-public class ControllerSettings {
+public class ControllerSettings extends ControllerBase {
     private static ControllerSettings instance;
 
     public static ControllerSettings getInstance() {
