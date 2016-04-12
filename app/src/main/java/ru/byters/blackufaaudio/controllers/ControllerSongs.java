@@ -37,6 +37,13 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
 
     public void playRandom(@NonNull Context context) {
         if (arrRawFieldsReflected == null || arrRawFieldsReflected.length == 0) return;
+        int pos = r.nextInt(arrRawFieldsReflected.length);
+
+        playSong(context, getItemId(pos));
+    }
+
+    public void playSong(@NonNull Context context, int itemId) {
+        if (itemId == NO_VALUE) return;
 
         if (mp == null) {
             mp = new MediaPlayer();
@@ -46,18 +53,10 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
             mp.reset();
         }
 
-        int value = NO_VALUE;
-        try {
-            value = (int) arrRawFieldsReflected[r.nextInt(arrRawFieldsReflected.length)].get(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        if (value == NO_VALUE) return;
-
         Uri uri = Uri.parse(
                 String.format(RAW_RESOURCE_PATH_FORMAT
                         , BuildConfig.APPLICATION_ID
-                        , value));
+                        , itemId));
 
         try {
             mp.setDataSource(context, uri);
@@ -79,26 +78,22 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
     }
 
     public int getItemId(int position) {
-        //todo implement
-        return 0;
+        if (arrRawFieldsReflected == null || arrRawFieldsReflected.length == 0)
+            return NO_VALUE;
+        if (position < 0 || position >= arrRawFieldsReflected.length) return NO_VALUE;
+
+        int value = NO_VALUE;
+        try {
+            value = (int) arrRawFieldsReflected[position].get(null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return value;
     }
 
     @Nullable
     public String getItemTitle(int id) {
         //todo implement
         return null;
-    }
-
-    public boolean isFavorited(int id) {
-        //todo implement
-        return false;
-    }
-
-    public void playSong(int id) {
-        //todo implement
-    }
-
-    public void switchFav(int id) {
-        //todo implement
     }
 }

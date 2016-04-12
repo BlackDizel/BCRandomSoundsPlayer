@@ -1,5 +1,6 @@
 package ru.byters.blackufaaudio.view.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.byters.blackufaaudio.R;
+import ru.byters.blackufaaudio.controllers.ControllerFavorited;
 import ru.byters.blackufaaudio.controllers.ControllerSongs;
 
 public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdapter.ViewHolder> {
@@ -56,15 +58,15 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
             if (id == ControllerSongs.NO_VALUE)
                 return;
 
-            checkFav();
+            checkFav(tvTitle.getContext());
 
             String s = ControllerSongs.getInstance().getItemTitle(id);
             if (!TextUtils.isEmpty(s))
                 tvTitle.setText(s);
         }
 
-        private void checkFav() {
-            if (ControllerSongs.getInstance().isFavorited(id))
+        private void checkFav(Context context) {
+            if (ControllerFavorited.getInstance().isFavorited(context, id))
                 vFav.setVisibility(View.VISIBLE);
             else
                 vFav.setVisibility(View.GONE);
@@ -75,15 +77,15 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
         public void onClick(View v) {
             if (id == ControllerSongs.NO_VALUE)
                 return;
-            ControllerSongs.getInstance().playSong(id);
+            ControllerSongs.getInstance().playSong(v.getContext(), id);
         }
 
         @Override
         public boolean onLongClick(View v) {
             if (id == ControllerSongs.NO_VALUE)
                 return true;
-            ControllerSongs.getInstance().switchFav(id);
-            checkFav();
+            ControllerFavorited.getInstance().switchFav(v.getContext(), id);
+            checkFav(v.getContext());
             return true;
         }
     }
