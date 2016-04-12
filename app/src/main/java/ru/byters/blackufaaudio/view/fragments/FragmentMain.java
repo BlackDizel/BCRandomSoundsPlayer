@@ -2,6 +2,8 @@ package ru.byters.blackufaaudio.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,13 @@ import ru.byters.blackufaaudio.R;
 import ru.byters.blackufaaudio.controllers.ControllerSettings;
 import ru.byters.blackufaaudio.controllers.ControllerSongs;
 import ru.byters.blackufaaudio.view.activities.ActivityMain;
+import ru.byters.blackufaaudio.view.adapters.FavoritedSongsAdapter;
 
 public class FragmentMain extends FragmentBase
         implements View.OnLongClickListener, View.OnClickListener {
 
     private View ivSettings;
+    private RecyclerView rvFavorited;
 
     public static FragmentMain getInstance() {
         return new FragmentMain();
@@ -30,8 +34,13 @@ public class FragmentMain extends FragmentBase
         v.findViewById(R.id.ivSettings).setOnClickListener(this);
         v.findViewById(R.id.ivPlay).setOnClickListener(this);
 
-        if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext()))
-            ivSettings.setVisibility(View.VISIBLE);
+        rvFavorited = (RecyclerView) v.findViewById(R.id.rvFavorited);
+        rvFavorited.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.fav_songs_column)));
+        rvFavorited.setAdapter(FavoritedSongsAdapter.getInstance(getContext()));
+
+        if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext())) {
+            setStateDisplayed(true);
+        }
 
         return v;
     }
@@ -39,10 +48,20 @@ public class FragmentMain extends FragmentBase
     @Override
     public boolean onLongClick(View v) {
         if (ivSettings.getVisibility() == View.GONE)
-            ivSettings.setVisibility(View.VISIBLE);
-        else ivSettings.setVisibility(View.GONE);
+            setStateDisplayed(true);
+        else setStateDisplayed(false);
 
         return true;
+    }
+
+    private void setStateDisplayed(boolean isAllVisible) {
+        if (isAllVisible) {
+            ivSettings.setVisibility(View.VISIBLE);
+            rvFavorited.setVisibility(View.VISIBLE);
+        } else {
+            ivSettings.setVisibility(View.GONE);
+            rvFavorited.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
