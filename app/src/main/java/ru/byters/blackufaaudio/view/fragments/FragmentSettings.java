@@ -18,6 +18,10 @@ import ru.byters.blackufaaudio.view.adapters.SettingSoundsAdapter;
 public class FragmentSettings extends FragmentBase
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
+    public static FragmentSettings getInstance() {
+        return new FragmentSettings();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
