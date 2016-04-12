@@ -9,9 +9,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ivSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/button_settings_padding"
+            android:visibility="gone"
+            app:srcCompat="@drawable/settings" />
+
+    </FrameLayout>
 
     <ImageView
+        android:id="@+id/ivPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/play" />
