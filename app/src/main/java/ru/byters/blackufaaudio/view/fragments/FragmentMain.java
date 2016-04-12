@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.byters.blackufaaudio.R;
+import ru.byters.blackufaaudio.controllers.ControllerSettings;
 import ru.byters.blackufaaudio.controllers.ControllerSongs;
+import ru.byters.blackufaaudio.view.activities.ActivityMain;
 
 public class FragmentMain extends FragmentBase
         implements View.OnLongClickListener, View.OnClickListener {
@@ -27,6 +29,10 @@ public class FragmentMain extends FragmentBase
         v.setOnLongClickListener(this);
         v.findViewById(R.id.ivSettings).setOnClickListener(this);
         v.findViewById(R.id.ivPlay).setOnClickListener(this);
+
+        if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext()))
+            ivSettings.setVisibility(View.VISIBLE);
+
         return v;
     }
 
@@ -46,7 +52,7 @@ public class FragmentMain extends FragmentBase
                 ControllerSongs.getInstance().playRandom(getActivity());
                 break;
             case R.id.ivSettings:
-                //todo implement
+                ((ActivityMain) getActivity()).setState(ActivityMain.STATE_SETTINGS);
                 break;
         }
     }
