@@ -43,7 +43,7 @@ public class FragmentMain extends FragmentBase
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivPlay:
-                ControllerSongs.getInstance().playRandom();
+                ControllerSongs.getInstance().playRandom(getActivity());
                 break;
             case R.id.ivSettings:
                 //todo implement
