@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -14,8 +15,8 @@ import ru.byters.blackufaaudio.R;
 
 public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPreparedListener {
 
+    public static final int NO_VALUE = -1;
     private static final String RAW_RESOURCE_PATH_FORMAT = "android.resource://%s/%d";
-    private static final int NO_VALUE = -1;
     private static ControllerSongs instance;
     //https://developer.android.com/reference/android/media/SoundPool.html
     private MediaPlayer mp;
@@ -73,4 +74,31 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
         mp.start();
     }
 
+    public int getSoundsSize() {
+        return arrRawFieldsReflected == null ? 0 : arrRawFieldsReflected.length;
+    }
+
+    public int getItemId(int position) {
+        //todo implement
+        return 0;
+    }
+
+    @Nullable
+    public String getItemTitle(int id) {
+        //todo implement
+        return null;
+    }
+
+    public boolean isFavorited(int id) {
+        //todo implement
+        return false;
+    }
+
+    public void playSong(int id) {
+        //todo implement
+    }
+
+    public void switchFav(int id) {
+        //todo implement
+    }
 }
