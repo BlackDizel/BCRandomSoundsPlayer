@@ -12,11 +12,13 @@ public class ControllerSettings extends ControllerBase {
     }
 
     public boolean isDisplaySettingsOnStartup(Context context) {
-        //todo implement
-        return false;
+        return ControllerStorage.getPreferences(context).getBoolean(ControllerStorage.PREF_STARTUP_DISPLAY_ALL, false);
     }
 
     public void setDisplaySettingsOnStartup(Context context, boolean isChecked) {
-        //todo implement
+        ControllerStorage.getPreferences(context)
+                .edit()
+                .putBoolean(ControllerStorage.PREF_STARTUP_DISPLAY_ALL, isChecked)
+                .apply();
     }
 }
