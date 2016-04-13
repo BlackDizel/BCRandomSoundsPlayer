@@ -2,6 +2,7 @@ package ru.byters.blackufaaudio.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -14,6 +15,8 @@ import java.io.ObjectOutputStream;
 public class ControllerStorage extends ControllerBase {
 
     public static final String CACHE_FAVORITED = "cache_favorited";
+    public static final String PREF_STARTUP_DISPLAY_ALL = "pref_startup_display_all";
+    private static final String PREF_STORAGE = "pref_storage";
     private static final String TAG = "controllerStorage";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
@@ -81,5 +84,7 @@ public class ControllerStorage extends ControllerBase {
         }
     }
 
-
+    public static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(PREF_STORAGE, Context.MODE_PRIVATE);
+    }
 }
