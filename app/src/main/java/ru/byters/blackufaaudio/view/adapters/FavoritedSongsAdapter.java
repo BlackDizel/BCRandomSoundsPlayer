@@ -2,9 +2,11 @@ package ru.byters.blackufaaudio.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import ru.byters.blackufaaudio.R;
 import ru.byters.blackufaaudio.controllers.ControllerFavorited;
@@ -47,16 +49,29 @@ public class FavoritedSongsAdapter extends RecyclerView.Adapter<FavoritedSongsAd
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
+        private TextView tvTitle;
         private int id;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             itemView.setOnClickListener(this);
         }
 
+
         public void setData(int position) {
-            //todo implement
+            tvTitle.setText(R.string.settings_sounds_item_title_error);
+
             id = ControllerSongs.getInstance().getItemId(position);
+            if (id == ControllerSongs.NO_VALUE)
+                return;
+
+            String title = ControllerSongs.getInstance().getItemTitle(id);
+            if (TextUtils.isEmpty(title))
+                return;
+
+            tvTitle.setText(title);
         }
 
         @Override
