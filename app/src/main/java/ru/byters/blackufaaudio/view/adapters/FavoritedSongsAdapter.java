@@ -50,7 +50,7 @@ public class FavoritedSongsAdapter extends RecyclerView.Adapter<FavoritedSongsAd
             implements View.OnClickListener {
 
         private TextView tvTitle;
-        private int id;
+        private String filename;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,11 +63,11 @@ public class FavoritedSongsAdapter extends RecyclerView.Adapter<FavoritedSongsAd
         public void setData(int position) {
             tvTitle.setText(R.string.settings_sounds_item_title_error);
 
-            id = ControllerSongs.getInstance().getItemId(position);
-            if (id == ControllerSongs.NO_VALUE)
+            filename = ControllerSongs.getInstance().getFilename(tvTitle.getContext(), position);
+            if (TextUtils.isEmpty(filename))
                 return;
 
-            String title = ControllerSongs.getInstance().getItemTitle(id);
+            String title = ControllerSongs.getInstance().getItemTitleShort(tvTitle.getContext(), filename);
             if (TextUtils.isEmpty(title))
                 return;
 
@@ -76,9 +76,9 @@ public class FavoritedSongsAdapter extends RecyclerView.Adapter<FavoritedSongsAd
 
         @Override
         public void onClick(View v) {
-            if (id == ControllerSongs.NO_VALUE)
+            if (TextUtils.isEmpty(filename))
                 return;
-            ControllerSongs.getInstance().playSong(v.getContext(), id);
+            ControllerSongs.getInstance().playSong(v.getContext(), filename);
         }
     }
 }

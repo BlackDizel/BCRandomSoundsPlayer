@@ -11,7 +11,7 @@ import ru.byters.blackufaaudio.view.adapters.FavoritedSongsAdapter;
 public class ControllerFavorited extends ControllerBase {
     private static ControllerFavorited instance;
 
-    private ArrayList<Integer> data;
+    private ArrayList<String> data;
 
     public static ControllerFavorited getInstance() {
         if (instance == null) instance = new ControllerFavorited();
@@ -19,23 +19,23 @@ public class ControllerFavorited extends ControllerBase {
     }
 
 
-    public boolean isFavorited(Context context, int id) {
-        return getData(context).contains(id);
+    public boolean isFavorited(Context context, String filename) {
+        return getData(context).contains(filename);
     }
 
     @NonNull
-    private ArrayList<Integer> getData(@Nullable Context context) {
+    private ArrayList<String> getData(@Nullable Context context) {
         if (data == null && context != null)
-            data = (ArrayList<Integer>) ControllerStorage.readObjectFromFile(context, ControllerStorage.CACHE_FAVORITED);
+            data = (ArrayList<String>) ControllerStorage.readObjectFromFile(context, ControllerStorage.CACHE_FAVORITED);
         if (data == null) data = new ArrayList<>();
         return data;
     }
 
-    public void switchFav(Context context, int id) {
-        if (isFavorited(context, id))
-            getData(context).remove((Integer) id);
+    public void switchFav(Context context, String filename) {
+        if (isFavorited(context, filename))
+            getData(context).remove(filename);
         else
-            getData(context).add(id);
+            getData(context).add(filename);
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.CACHE_FAVORITED);
         FavoritedSongsAdapter.getInstance(context).updateData();
     }

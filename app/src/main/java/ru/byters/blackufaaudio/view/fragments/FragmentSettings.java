@@ -1,5 +1,6 @@
 package ru.byters.blackufaaudio.view.fragments;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,7 @@ public class FragmentSettings extends FragmentBase
 
         RecyclerView rv = (RecyclerView) v.findViewById(R.id.rvSounds);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new SettingSoundsAdapter());
+        rv.setAdapter(new SettingSoundsAdapter((Application) getContext().getApplicationContext()));
 
         return v;
     }

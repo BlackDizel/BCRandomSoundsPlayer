@@ -1,32 +1,32 @@
 package ru.byters.blackufaaudio.controllers;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Random;
 
-import ru.byters.blackufaaudio.BuildConfig;
-import ru.byters.blackufaaudio.R;
+import ru.byters.blackufaaudio.model.SoundData;
 
 public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPreparedListener {
 
-    public static final int NO_VALUE = -1;
-    private static final String RAW_RESOURCE_PATH_FORMAT = "android.resource://%s/%d";
+    //META FILE FORMAT: <filename>|<TITLE>|<SHORT TITLE>\n
+    private static final String ASSET_META_FILE = "meta.txt";
+    private static final String META_DELIMETER_PATTERN = "[|]";
     private static ControllerSongs instance;
-    //https://developer.android.com/reference/android/media/SoundPool.html
     private MediaPlayer mp;
     private Random r;
-    private Field[] arrRawFieldsReflected;
+    private ArrayList<SoundData> data;
 
     private ControllerSongs() {
         r = new Random();
-        arrRawFieldsReflected = R.raw.class.getFields();
-
     }
 
     public static ControllerSongs getInstance() {
@@ -36,14 +36,13 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
     }
 
     public void playRandom(@NonNull Context context) {
-        if (arrRawFieldsReflected == null || arrRawFieldsReflected.length == 0) return;
-        int pos = r.nextInt(arrRawFieldsReflected.length);
-
-        playSong(context, getItemId(pos));
+        if (getSoundsSize(context) == 0) return;
+        int pos = r.nextInt(getData(context).size());
+        playSong(context, getFilename(context, pos));
     }
 
-    public void playSong(@NonNull Context context, int itemId) {
-        if (itemId == NO_VALUE) return;
+    public void playSong(@NonNull Context context, String filename) {
+        if (TextUtils.isEmpty(filename)) return;
 
         if (mp == null) {
             mp = new MediaPlayer();
@@ -53,13 +52,9 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
             mp.reset();
         }
 
-        Uri uri = Uri.parse(
-                String.format(RAW_RESOURCE_PATH_FORMAT
-                        , BuildConfig.APPLICATION_ID
-                        , itemId));
-
         try {
-            mp.setDataSource(context, uri);
+            AssetFileDescriptor afd = context.getAssets().openFd(filename);
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -73,27 +68,66 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
         mp.start();
     }
 
-    public int getSoundsSize() {
-        return arrRawFieldsReflected == null ? 0 : arrRawFieldsReflected.length;
-    }
-
-    public int getItemId(int position) {
-        if (arrRawFieldsReflected == null || arrRawFieldsReflected.length == 0)
-            return NO_VALUE;
-        if (position < 0 || position >= arrRawFieldsReflected.length) return NO_VALUE;
-
-        int value = NO_VALUE;
-        try {
-            value = (int) arrRawFieldsReflected[position].get(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return value;
+    public int getSoundsSize(Context context) {
+        return getData(context) == null ? 0 : getData(context).size();
     }
 
     @Nullable
-    public String getItemTitle(int id) {
-        //todo implement
+    public String getFilename(Context context, int position) {
+        if (getSoundsSize(context) == 0)
+            return null;
+        if (position < 0 || position >= getData(context).size()) return null;
+
+        SoundData item = getData(context).get(position);
+        if (item == null) return null;
+        return item.getFilename();
+    }
+
+    @Nullable
+    public String getItemTitle(Context context, String filename) {
+        SoundData item = getItem(context, filename);
+        if (item == null) return null;
+        return item.getTitle();
+    }
+
+    private ArrayList<SoundData> getData(Context context) {
+        if (data != null) return data;
+
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(context.getAssets().open(ASSET_META_FILE)));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] arr = line.split(META_DELIMETER_PATTERN);
+                if (arr == null || arr.length == 0)
+                    continue;
+                if (data == null) data = new ArrayList<>();
+                SoundData item = new SoundData(arr[0]
+                        , arr.length > 1 ? arr[1] : null
+                        , arr.length > 2 ? arr[2] : null);
+                data.add(item);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    @Nullable
+    public String getItemTitleShort(Context context, String filename) {
+        SoundData item = getItem(context, filename);
+        if (item == null) return null;
+        return item.getShortTitle();
+    }
+
+    private SoundData getItem(Context context, String filename) {
+        if (getSoundsSize(context) == 0) return null;
+        for (SoundData item : getData(context)) {
+            if (item == null)
+                continue;
+            if (item.getFilename().equals(filename))
+                return item;
+        }
         return null;
     }
 }

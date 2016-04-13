@@ -1,5 +1,6 @@
 package ru.byters.blackufaaudio.view.adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,6 +14,12 @@ import ru.byters.blackufaaudio.controllers.ControllerFavorited;
 import ru.byters.blackufaaudio.controllers.ControllerSongs;
 
 public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdapter.ViewHolder> {
+
+    private Application context;
+
+    public SettingSoundsAdapter(Application context) {
+        this.context = context;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,14 +37,14 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
 
     @Override
     public int getItemCount() {
-        return ControllerSongs.getInstance().getSoundsSize();
+        return context == null ? 0 : ControllerSongs.getInstance().getSoundsSize(context);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
         private TextView tvTitle;
         private View vFav;
-        private int id;
+        private String filename;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -54,19 +61,19 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
 
         public void setData(int position) {
             resetData();
-            this.id = ControllerSongs.getInstance().getItemId(position);
-            if (id == ControllerSongs.NO_VALUE)
+            this.filename = ControllerSongs.getInstance().getFilename(tvTitle.getContext(), position);
+            if (TextUtils.isEmpty(filename))
                 return;
 
             checkFav(tvTitle.getContext());
 
-            String s = ControllerSongs.getInstance().getItemTitle(id);
+            String s = ControllerSongs.getInstance().getItemTitle(tvTitle.getContext(), filename);
             if (!TextUtils.isEmpty(s))
                 tvTitle.setText(s);
         }
 
         private void checkFav(Context context) {
-            if (ControllerFavorited.getInstance().isFavorited(context, id))
+            if (ControllerFavorited.getInstance().isFavorited(context, filename))
                 vFav.setVisibility(View.VISIBLE);
             else
                 vFav.setVisibility(View.GONE);
@@ -75,16 +82,16 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
 
         @Override
         public void onClick(View v) {
-            if (id == ControllerSongs.NO_VALUE)
+            if (TextUtils.isEmpty(filename))
                 return;
-            ControllerSongs.getInstance().playSong(v.getContext(), id);
+            ControllerSongs.getInstance().playSong(v.getContext(), filename);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            if (id == ControllerSongs.NO_VALUE)
+            if (TextUtils.isEmpty(filename))
                 return true;
-            ControllerFavorited.getInstance().switchFav(v.getContext(), id);
+            ControllerFavorited.getInstance().switchFav(v.getContext(), filename);
             checkFav(v.getContext());
             return true;
         }
