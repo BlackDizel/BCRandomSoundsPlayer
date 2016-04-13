@@ -2,13 +2,27 @@ package ru.byters.blackufaaudio.controllers;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
+import ru.byters.blackufaaudio.R;
 
 public class Core extends Application {
-    public void sendFeedback() {
-        //todo implement
+
+    public void sendFeedback(Context context) {
+        String uri = getString(R.string.feedback_form_address);
+        navigateUri(context, uri);
     }
 
     public void navigateWebsite(Context context) {
-        //todo implement
+        String uri = getString(R.string.website_address);
+        navigateUri(context, uri);
+    }
+
+    private void navigateUri(Context context, String uri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        if (intent.resolveActivity(getPackageManager()) == null)
+            return;
+        context.startActivity(intent);
     }
 }

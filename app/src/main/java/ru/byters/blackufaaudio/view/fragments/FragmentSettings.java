@@ -51,7 +51,7 @@ public class FragmentSettings extends FragmentBase
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvFeedback:
-                ((Core) getContext().getApplicationContext()).sendFeedback();
+                ((Core) getContext().getApplicationContext()).sendFeedback(getContext());
                 break;
             case R.id.tvByters:
                 ((Core) getContext().getApplicationContext()).navigateWebsite(getContext());
