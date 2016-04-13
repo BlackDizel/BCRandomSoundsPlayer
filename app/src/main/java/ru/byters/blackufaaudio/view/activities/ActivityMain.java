@@ -2,7 +2,7 @@ package ru.byters.blackufaaudio.view.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
+import android.support.v4.app.FragmentTransaction;
 
 import ru.byters.blackufaaudio.R;
 import ru.byters.blackufaaudio.view.fragments.FragmentMain;
@@ -25,26 +25,33 @@ public class ActivityMain extends ActivityBase {
     }
 
     public void setState(int state) {
-        Fragment f = null;
-        String tag = null;
+        Fragment f;
+        String tag;
+        int animOut, animIn;
 
         switch (state) {
             case STATE_MAIN:
                 tag = PAGE_TAG_MAIN;
                 f = getSupportFragmentManager().findFragmentByTag(tag);
                 if (f == null) f = FragmentMain.getInstance();
+                animOut = R.anim.slide_to_right;
+                animIn = R.anim.slide_from_left;
                 break;
             case STATE_SETTINGS:
                 tag = PAGE_TAG_SETTINGS;
                 f = getSupportFragmentManager().findFragmentByTag(tag);
                 if (f == null) f = FragmentSettings.getInstance();
+                animOut = R.anim.slide_to_left;
+                animIn = R.anim.slide_from_right;
                 break;
+            default:
+                return;
         }
-        if (f == null || TextUtils.isEmpty(tag)) return;
 
         f.setRetainInstance(true);
-        //todo add animation
-        getSupportFragmentManager().beginTransaction().replace(R.id.rootView, f, tag).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(animIn, animOut);
+        transaction.replace(R.id.rootView, f, tag).commit();
         currentState = state;
     }
 
