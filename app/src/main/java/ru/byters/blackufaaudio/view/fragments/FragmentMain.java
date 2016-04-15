@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.byters.blackufaaudio.R;
+import ru.byters.blackufaaudio.controllers.ControllerFavorited;
 import ru.byters.blackufaaudio.controllers.ControllerSettings;
 import ru.byters.blackufaaudio.controllers.ControllerSongs;
 import ru.byters.blackufaaudio.view.activities.ActivityMain;
@@ -35,12 +36,16 @@ public class FragmentMain extends FragmentBase
         v.findViewById(R.id.ivPlay).setOnClickListener(this);
 
         rvFavorited = (RecyclerView) v.findViewById(R.id.rvFavorited);
-        rvFavorited.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.fav_songs_column)));
+        int columns = getResources().getInteger(R.integer.fav_songs_column);
+        int favCount = ControllerFavorited.getInstance().getDataSize(getContext());
+        if (favCount > 0 && favCount < columns)
+            columns = favCount;
+        rvFavorited.setLayoutManager(new GridLayoutManager(getContext()
+                , columns));
         rvFavorited.setAdapter(FavoritedSongsAdapter.getInstance(getContext()));
 
-        if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext())) {
+        if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext()))
             setStateDisplayed(true);
-        }
 
         return v;
     }
