@@ -30,4 +30,25 @@ public class Core extends Application {
         String uri = getString(R.string.website_address_channel);
         navigateUri(context, uri);
     }
+
+    public void navigateTwitch(Context context) {
+        String uri = getString(R.string.website_address_twitch);
+        navigateUri(context, uri);
+    }
+
+    public void navigateArchive(Context context) {
+        String uri = getString(R.string.website_address_archive);
+        navigateUri(context, uri);
+    }
+
+    public void navigateVK(Context context) {
+        String uri = getString(R.string.website_address_vk);
+        navigateUri(context, uri);
+    }
+
+    public void navigateVKByters(Context context) {
+        String uri = getString(R.string.website_address_byters_vk);
+        navigateUri(context, uri);
+    }
+
 }

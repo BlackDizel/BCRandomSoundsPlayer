@@ -28,6 +28,33 @@
                 android:text="@string/visit_youtube_channel"
                 android:textColor="@color/white" />
 
+            <TextView
+                android:id="@+id/tvVisitTwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/settings_page_content_padding"
+                android:text="@string/visit_twitch_channel"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvVisitArchive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/settings_page_content_padding"
+                android:text="@string/visit_archive"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvVisitVK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/settings_page_content_padding"
+                android:text="@string/visit_vk_community"
+                android:textColor="@color/white" />
+
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/scStartupMode"
                 android:layout_width="match_parent"
@@ -79,6 +106,15 @@
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/settings_page_content_padding"
                 android:text="@string/feedback"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvBytersVK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/settings_page_content_padding"
+                android:text="@string/visit_vk_community"
                 android:textColor="@color/white" />
 
         </LinearLayout>

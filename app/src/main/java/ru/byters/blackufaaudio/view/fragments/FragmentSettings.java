@@ -29,6 +29,10 @@ public class FragmentSettings extends FragmentBase
         v.findViewById(R.id.tvFeedback).setOnClickListener(this);
         v.findViewById(R.id.tvByters).setOnClickListener(this);
         v.findViewById(R.id.tvVisitChannel).setOnClickListener(this);
+        v.findViewById(R.id.tvVisitTwitch).setOnClickListener(this);
+        v.findViewById(R.id.tvVisitArchive).setOnClickListener(this);
+        v.findViewById(R.id.tvVisitVK).setOnClickListener(this);
+        v.findViewById(R.id.tvBytersVK).setOnClickListener(this);
 
         SwitchCompat sc = (SwitchCompat) v.findViewById(R.id.scStartupMode);
         if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext()))
@@ -59,6 +63,18 @@ public class FragmentSettings extends FragmentBase
                 break;
             case R.id.tvVisitChannel:
                 ((Core) getContext().getApplicationContext()).navigateYouTube(getContext());
+                break;
+            case R.id.tvVisitTwitch:
+                ((Core) getContext().getApplicationContext()).navigateTwitch(getContext());
+                break;
+            case R.id.tvVisitArchive:
+                ((Core) getContext().getApplicationContext()).navigateArchive(getContext());
+                break;
+            case R.id.tvVisitVK:
+                ((Core) getContext().getApplicationContext()).navigateVK(getContext());
+                break;
+            case R.id.tvBytersVK:
+                ((Core) getContext().getApplicationContext()).navigateVKByters(getContext());
                 break;
         }
     }

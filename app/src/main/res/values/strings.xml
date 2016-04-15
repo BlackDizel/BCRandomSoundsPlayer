@@ -6,10 +6,19 @@
     <string name="visit_website">visit website</string>
     <string name="settings_display_mode">Display settings icon and featured list on startup</string>
     <string name="settings_sounds_item_title_error">no data</string>
-    <string name="website_address">http://www.byters.org</string>
-    <string name="website_address_channel">https://www.youtube.com/user/BlackSilverUfa</string>
-    <string name="feedback_form_address">http://goo.gl/forms/IRhFko8a5n</string>
     <string name="created_by_byters_2016">created by Byters, 2016</string>
     <string name="visit_youtube_channel">visit YouTube channel</string>
+    <string name="visit_twitch_channel">visit Twitch channel</string>
+    <string name="visit_archive">visit archive</string>
+    <string name="visit_vk_community">visit vk community</string>
+
+    <string name="website_address">http://www.byters.org</string>
+    <string name="website_address_byters_vk">https://vk.com/bytecoders</string>
+    <string name="feedback_form_address">http://goo.gl/forms/IRhFko8a5n</string>
+
+    <string name="website_address_channel">https://www.youtube.com/user/BlackSilverUfa</string>
+    <string name="website_address_twitch">https://www.twitch.tv/blackufa_twitch</string>
+    <string name="website_address_vk">https://vk.com/official_group_by_blacksilver</string>
+    <string name="website_address_archive">http://bsarchive.com/</string>
 
 </resources>
