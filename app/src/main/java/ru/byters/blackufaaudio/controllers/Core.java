@@ -25,4 +25,9 @@ public class Core extends Application {
             return;
         context.startActivity(intent);
     }
+
+    public void navigateYouTube(Context context) {
+        String uri = getString(R.string.website_address_channel);
+        navigateUri(context, uri);
+    }
 }
