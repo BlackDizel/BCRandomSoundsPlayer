@@ -28,6 +28,7 @@ public class FragmentSettings extends FragmentBase
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         v.findViewById(R.id.tvFeedback).setOnClickListener(this);
         v.findViewById(R.id.tvByters).setOnClickListener(this);
+        v.findViewById(R.id.tvVisitChannel).setOnClickListener(this);
 
         SwitchCompat sc = (SwitchCompat) v.findViewById(R.id.scStartupMode);
         if (ControllerSettings.getInstance().isDisplaySettingsOnStartup(getContext()))
@@ -55,6 +56,9 @@ public class FragmentSettings extends FragmentBase
                 break;
             case R.id.tvByters:
                 ((Core) getContext().getApplicationContext()).navigateWebsite(getContext());
+                break;
+            case R.id.tvVisitChannel:
+                ((Core) getContext().getApplicationContext()).navigateYouTube(getContext());
                 break;
         }
     }

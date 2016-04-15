@@ -5,4 +5,5 @@
     <dimen name="settings_page_content_padding">16dp</dimen>
     <dimen name="settings_song_item_fav_view_width">2dp</dimen>
     <dimen name="fav_item_padding">16dp</dimen>
+    <dimen name="setting_divider_height">48dp</dimen>
 </resources>
