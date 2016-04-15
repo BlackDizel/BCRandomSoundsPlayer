@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">RandomAudio</string>
-    <!--todo set text -->
-    <string name="about">text Lorum ipsum siteurl\ncreated by Byters, 2016</string>
-    <!--todo add feedback form address -->
-    <string name="feedback_form_address">http://www.example.com</string>
+    <string name="app_name">BlackUfa Audio</string>
 
+    <string name="about">BlackSilverUfa—youtube канал, посвященный видеоиграм</string>
     <string name="feedback">send feedback</string>
     <string name="visit_website">visit website</string>
     <string name="settings_display_mode">Display settings icon and featured list on startup</string>
     <string name="settings_sounds_item_title_error">no data</string>
     <string name="website_address">http://www.byters.org</string>
+    <string name="website_address_channel">https://www.youtube.com/user/BlackSilverUfa</string>
+    <string name="feedback_form_address">http://goo.gl/forms/IRhFko8a5n</string>
+    <string name="created_by_byters_2016">created by Byters, 2016</string>
+    <string name="visit_youtube_channel">visit YouTube channel</string>
+
 </resources>
