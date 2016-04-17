@@ -102,17 +102,12 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
             if (TextUtils.isEmpty(filename))
                 return;
 
-            switch (v.getId()) {
-                //todo implement open source url
-                /*case R.id.llSource:
-                    String url = ControllerSongs.getInstance().getItemSourceUrl(v.getContext(), filename);
+            //todo implement open source url
+                /*  String url = ControllerSongs.getInstance().getItemSourceUrl(v.getContext(), filename);
                     if (!TextUtils.isEmpty(url))
                         Core.navigateUri(v.getContext(), url);
-                    break;*/
-                case R.id.tvTitle:
-                    ControllerSongs.getInstance().playSong(v.getContext(), filename);
-                    break;
-            }
+                    */
+            ControllerSongs.getInstance().playSong(v.getContext(), filename);
         }
 
         @Override
