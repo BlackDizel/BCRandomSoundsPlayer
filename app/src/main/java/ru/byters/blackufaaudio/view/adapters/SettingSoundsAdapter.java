@@ -42,21 +42,27 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
-        private TextView tvTitle;
+        private TextView tvTitle, tvSourceTitle, tvAuthor;
         private View vFav;
         private String filename;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvAuthor = (TextView) itemView.findViewById(R.id.tvAuthor);
+            tvSourceTitle = (TextView) itemView.findViewById(R.id.tvSourceTitle);
             vFav = itemView.findViewById(R.id.vFavorited);
+
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 
-
         private void resetData() {
             tvTitle.setText(R.string.settings_sounds_item_title_error);
+            tvAuthor.setText("");
+            tvSourceTitle.setText("");
+            tvAuthor.setVisibility(View.GONE);
+            tvSourceTitle.setVisibility(View.GONE);
         }
 
         public void setData(int position) {
@@ -67,9 +73,21 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
 
             checkFav(tvTitle.getContext());
 
-            String s = ControllerSongs.getInstance().getItemTitle(tvTitle.getContext(), filename);
-            if (!TextUtils.isEmpty(s))
-                tvTitle.setText(s);
+            String title = ControllerSongs.getInstance().getItemTitle(tvTitle.getContext(), filename);
+            if (!TextUtils.isEmpty(title))
+                tvTitle.setText(title);
+
+            String sourceTitle = ControllerSongs.getInstance().getItemSourceTitle(tvTitle.getContext(), filename);
+            if (!TextUtils.isEmpty(sourceTitle)) {
+                tvSourceTitle.setText(sourceTitle);
+                tvSourceTitle.setVisibility(View.VISIBLE);
+            }
+
+            String author = ControllerSongs.getInstance().getItemAuthor(tvTitle.getContext(), filename);
+            if (!TextUtils.isEmpty(author)) {
+                tvAuthor.setText(author);
+                tvAuthor.setVisibility(View.VISIBLE);
+            }
         }
 
         private void checkFav(Context context) {
@@ -79,12 +97,22 @@ public class SettingSoundsAdapter extends RecyclerView.Adapter<SettingSoundsAdap
                 vFav.setVisibility(View.GONE);
         }
 
-
         @Override
         public void onClick(View v) {
             if (TextUtils.isEmpty(filename))
                 return;
-            ControllerSongs.getInstance().playSong(v.getContext(), filename);
+
+            switch (v.getId()) {
+                //todo implement open source url
+                /*case R.id.llSource:
+                    String url = ControllerSongs.getInstance().getItemSourceUrl(v.getContext(), filename);
+                    if (!TextUtils.isEmpty(url))
+                        Core.navigateUri(v.getContext(), url);
+                    break;*/
+                case R.id.tvTitle:
+                    ControllerSongs.getInstance().playSong(v.getContext(), filename);
+                    break;
+            }
         }
 
         @Override
