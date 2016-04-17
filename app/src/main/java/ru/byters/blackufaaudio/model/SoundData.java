@@ -4,16 +4,27 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class SoundData {
+    private String filename;
     private String title;
     private String shortTitle;
-    private String filename;
+
+    private String sourceTitle;
+    private String url;
+    private String author;
 
     public SoundData(@NonNull String filename
             , @Nullable String title
-            , @Nullable String shortTitle) {
+            , @Nullable String shortTitle
+            , @Nullable String sourceTitle
+            , @Nullable String url
+            , @Nullable String author
+    ) {
         this.title = title;
         this.shortTitle = shortTitle;
         this.filename = filename;
+        this.sourceTitle = sourceTitle;
+        this.url = url;
+        this.author = author;
     }
 
     @Nullable
@@ -28,5 +39,20 @@ public class SoundData {
 
     public String getFilename() {
         return filename;
+    }
+
+    @Nullable
+    public String getUrl() {
+        return url;
+    }
+
+    @Nullable
+    public String getSourceTitle() {
+        return sourceTitle;
+    }
+
+    @Nullable
+    public String getAuthor() {
+        return author;
     }
 }

@@ -17,7 +17,7 @@ import ru.byters.blackufaaudio.model.SoundData;
 
 public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPreparedListener {
 
-    //META FILE FORMAT: <filename>|<TITLE>|<SHORT TITLE>\n
+    //META FILE FORMAT: <filename>|<TITLE>|<SHORT TITLE>|<SOURCE_TITLE>|<SOURCE_URL>|<author>\n
     private static final String ASSET_META_FILE = "meta.txt";
     private static final String META_DELIMETER_PATTERN = "[|]";
     private static ControllerSongs instance;
@@ -104,7 +104,10 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
                 if (data == null) data = new ArrayList<>();
                 SoundData item = new SoundData(arr[0]
                         , arr.length > 1 ? arr[1] : null
-                        , arr.length > 2 ? arr[2] : null);
+                        , arr.length > 2 ? arr[2] : null
+                        , arr.length > 3 ? arr[3] : null
+                        , arr.length > 4 ? arr[4] : null
+                        , arr.length > 5 ? arr[5] : null);
                 data.add(item);
             }
         } catch (IOException e) {
@@ -129,5 +132,26 @@ public class ControllerSongs extends ControllerBase implements MediaPlayer.OnPre
                 return item;
         }
         return null;
+    }
+
+    @Nullable
+    public String getItemSourceTitle(Context context, String filename) {
+        SoundData item = getItem(context, filename);
+        if (item == null) return null;
+        return item.getSourceTitle();
+    }
+
+    @Nullable
+    public String getItemSourceUrl(Context context, String filename) {
+        SoundData item = getItem(context, filename);
+        if (item == null) return null;
+        return item.getUrl();
+    }
+
+    @Nullable
+    public String getItemAuthor(Context context, String filename) {
+        SoundData item = getItem(context, filename);
+        if (item == null) return null;
+        return item.getAuthor();
     }
 }
