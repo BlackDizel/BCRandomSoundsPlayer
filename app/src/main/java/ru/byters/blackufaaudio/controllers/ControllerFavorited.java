@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ru.byters.blackufaaudio.view.adapters.FavoritedSongsAdapter;
 
@@ -28,6 +29,7 @@ public class ControllerFavorited extends ControllerBase {
         if (data == null && context != null)
             data = (ArrayList<String>) ControllerStorage.readObjectFromFile(context, ControllerStorage.CACHE_FAVORITED);
         if (data == null) data = new ArrayList<>();
+        Collections.sort(data);
         return data;
     }
 
@@ -42,5 +44,13 @@ public class ControllerFavorited extends ControllerBase {
 
     public int getDataSize(Context context) {
         return getData(context).size();
+    }
+
+    @Nullable
+    public String getFilename(Context context, int position) {
+        if (getData(context) == null || getData(context).size() == 0) return null;
+        if (position < 0 || position >= getData(context).size())
+            return null;
+        return getData(context).get(position);
     }
 }

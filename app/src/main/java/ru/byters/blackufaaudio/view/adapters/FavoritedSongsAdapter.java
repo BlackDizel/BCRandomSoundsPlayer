@@ -63,7 +63,7 @@ public class FavoritedSongsAdapter extends RecyclerView.Adapter<FavoritedSongsAd
         public void setData(int position) {
             tvTitle.setText(R.string.settings_sounds_item_title_error);
 
-            filename = ControllerSongs.getInstance().getFilename(tvTitle.getContext(), position);
+            filename = ControllerFavorited.getInstance().getFilename(tvTitle.getContext(), position);
             if (TextUtils.isEmpty(filename))
                 return;
 
